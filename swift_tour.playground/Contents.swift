@@ -119,33 +119,140 @@
 //triangle.setSideLength()
 
 
-class Hoge {
-    var hoge: String = "hoge" {
-        willSet {
-            print("willSet called")
-        }
-        didSet {
-            print("didSet called")
-        }
-    }
+//class Hoge {
+//    var hoge: String = "hoge" {
+//        willSet {
+//            print("willSet called")
+//        }
+//        didSet {
+//            print("didSet called")
+//        }
+//    }
+//
+//    init() {
+//        print("init called")
+//        print("hoge = \(hoge)")
+//        hoge = "hoge"
+//
+//        print("init ended")
+//    }
+//
+//    func setHoge() {
+//        print("setVars called")
+//
+//        hoge = "hoge"
+//
+//        print("setVars ended")
+//    }
+//}
+//
+//let hoge = Hoge()
+//hoge.setHoge()
+//hoge.hoge = "hoge"
 
-    init() {
-        print("init called")
-        print("hoge = \(hoge)")
-        hoge = "hoge"
+//enum ServerResponse {
+//    case result(String, String)
+//    case failure(String)
+//}
+//
+//let success = ServerResponse.result("6:00 am", "8:09 pm")
+//let failure = ServerResponse.failure("Out of cheese.")
+//
+//switch success {
+//case let .result(sunrise, sunset):
+//    print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
+//case let .failure(message):
+//    print("Failure...  \(message)")
+//}
+//// Prints "Sunrise is at 6:00 am and sunset is at 8:09 pm."
 
-        print("init ended")
-    }
+//enum Rank: Int, CaseIterable {
+//    case ace = 1
+//    case two, three, four, five, six, seven, eight, nine, ten
+//    case jack, queen, king
+//
+//    func simpleDescription() -> String {
+//        switch self {
+//        case .ace:
+//            return "ace"
+//        case .jack:
+//            return "jack"
+//        case .queen:
+//            return "queen"
+//        case .king:
+//            return "king"
+//        default:
+//            return String(self.rawValue)
+//        }
+//    }
+//}
+//
+//enum Suit: CaseIterable {
+//    case spades, hearts, diamonds, clubs
+//
+//    func simpleDescription() -> String {
+//        switch self {
+//        case .spades:
+//            return "spades"
+//        case .hearts:
+//            return "hearts"
+//        case .diamonds:
+//            return "diamonds"
+//        case .clubs:
+//            return "clubs"
+//        }
+//    }
+//}
+//
+//struct Card {
+//    var rank: Rank
+//    var suit: Suit
+//
+//    func simpleDescription() -> String {
+//        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+//    }
+//}
+//
+//func createDeck() -> [Card] {
+//    var ret: [Card] = []
+//    Rank.allCases.forEach { rank in
+//        Suit.allCases.forEach { suit in
+//            ret.append(.init(rank: rank, suit: suit))
+//        }
+//    }
+//
+//    return ret
+//}
+//
+//createDeck()
+//
+////Rank.AllCases
+//Rank.allCases
+//Rank.ace.rawValue
+//Suit.spades
 
-    func setHoge() {
-        print("setVars called")
-
-        hoge = "hoge"
-
-        print("setVars ended")
-    }
+enum PrinterError: Error {
+    case outOfPaper
+    case noToner
+    case onFire
 }
 
-let hoge = Hoge()
-hoge.setHoge()
-hoge.hoge = "hoge"
+func send(job: Int, toPrinter printerName: String) throws -> String {
+    if printerName == "Never Has Toner" {
+        throw PrinterError.noToner
+    }
+    return "Job sent"
+}
+
+do {
+    let printerResponse = try send(job: 1440, toPrinter: "Never Has Toner")
+    print(printerResponse)
+} catch PrinterError.onFire {
+    print("I'll just put this over here, with the rest of the fire.")
+} catch let printerError as PrinterError {
+    print("Printer error: \(printerError).")
+} catch {
+    print("third")
+    print(error)
+}
+// Prints "Job sent"
