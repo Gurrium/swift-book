@@ -231,28 +231,43 @@
 //Rank.ace.rawValue
 //Suit.spades
 
-enum PrinterError: Error {
-    case outOfPaper
-    case noToner
-    case onFire
-}
-
-func send(job: Int, toPrinter printerName: String) throws -> String {
-    if printerName == "Never Has Toner" {
-        throw PrinterError.noToner
-    }
-    return "Job sent"
-}
-
-do {
-    let printerResponse = try send(job: 1440, toPrinter: "Never Has Toner")
-    print(printerResponse)
-} catch PrinterError.onFire {
-    print("I'll just put this over here, with the rest of the fire.")
-} catch let printerError as PrinterError {
-    print("Printer error: \(printerError).")
-} catch {
-    print("third")
-    print(error)
-}
+//enum PrinterError: Error {
+//    case outOfPaper
+//    case noToner
+//    case onFire
+//}
+//
+//func send(job: Int, toPrinter printerName: String) throws -> String {
+//    if printerName == "Never Has Toner" {
+//        throw PrinterError.noToner
+//    }
+//    return "Job sent"
+//}
+//
+//do {
+//    let printerResponse = try send(job: 1440, toPrinter: "Never Has Toner")
+//    print(printerResponse)
+//} catch PrinterError.onFire {
+//    print("I'll just put this over here, with the rest of the fire.")
+//} catch let printerError as PrinterError {
+//    print("Printer error: \(printerError).")
+//} catch {
+//    print("third")
+//    print(error)
+//}
 // Prints "Job sent"
+
+func anyCommonElements<T, U>(_ lhs: T, _ rhs: U) -> [T.Element]
+where T: Sequence, U: Sequence, T.Element: Equatable, T.Element == U.Element
+{
+    var ret: [T.Element] = []
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                ret.append(lhsItem)
+            }
+        }
+    }
+    return ret
+}
+anyCommonElements([1, 2, 3], [3, 4])
