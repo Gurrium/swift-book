@@ -6,3 +6,5 @@ print(red, green, blue)
 
 let `let` = "let"
 print(`let`)
+
+print(-16.squareRoot())
