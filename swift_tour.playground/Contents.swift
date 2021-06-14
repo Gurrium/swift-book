@@ -1,10 +1,12 @@
-var red, green, blue: Double
-red = 2
-green = 5
-blue = 3
-print(red, green, blue)
+let beef = 0xbeef.ep2
+let cofee = 0xc0fee.ep12
+print(beef)
+print(cofee)
 
-let `let` = "let"
-print(`let`)
+let dividedDec = 1_0_0_00_0.3_______1
+print(dividedDec)
 
-print(-16.squareRoot())
+let tooBig: UInt8 = 255 + UInt8.random(in: 1...5)
+print(tooBig)
+
+let convertetd = UInt16(tooBig)
