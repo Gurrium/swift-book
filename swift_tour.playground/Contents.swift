@@ -7,4 +7,5 @@ oString = nil
 iuoString = nil
 print(oString) // 落ちない
 print(iuoString) // 落ちない
+print(iuoString?.count) // 落ちる
 print(iuoString.count) // 落ちる
