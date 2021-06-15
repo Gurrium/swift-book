@@ -3,9 +3,11 @@ print(tuple.0)
 
 var iuoString: String! = "implicitly unwrapped optional string"
 var oString = iuoString
-oString = nil
 iuoString = nil
-print(oString) // 落ちない
+oString = nil
 print(iuoString) // 落ちない
-print(iuoString?.count) // 落ちる
+print(oString) // 落ちない
+print(iuoString?.count) // 落ちない
+print(oString?.count) // 落ちない
 print(iuoString.count) // 落ちる
+//print(oString.count) // コンパイルできない
