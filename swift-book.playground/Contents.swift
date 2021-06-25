@@ -1,18 +1,12 @@
-import Foundation
-
-func pp(_ str: String) {
-    print(str, "count: \(str.count), length: \((str as NSString).length)")
+func printPointer(of some: Any) {
+    withUnsafePointer(to: some, { print($0) })
 }
 
-var cafe = "cafe"
-pp(cafe)
-cafe.append("\u{301}")
-pp(cafe)
+var str: String? = "Hello, World!!"
+let substr = str![..<str!.firstIndex(of: ",")!]
 
-var jp = "\u{1f1ef}"
-pp(jp)
-jp.append("\u{1f1f5}")
-pp(jp)
-
-let greeting = "Hello World"
-greeting.index(after: greeting.endIndexd)
+printPointer(of: str)
+printPointer(of: substr)
+str = nil
+printPointer(of: str)
+printPointer(of: substr)
