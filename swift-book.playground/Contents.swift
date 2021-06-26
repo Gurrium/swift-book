@@ -1,33 +1,19 @@
-func printPointer(of some: Any) {
-    withUnsafePointer(to: some, { print($0) })
+// "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
+let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
+
+// "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
+let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
+
+if eAcuteQuestion == combinedEAcuteQuestion {
+    print("These two strings are considered equal")
 }
+// Prints "These two strings are considered equal"
 
-var str: String? = "Hello, World!!"
-var substr: Substring? = str![..<str!.firstIndex(of: ",")!]
+let latinCapitalLetterA: Character = "\u{41}"
 
-print("---")
-print("str: \(str)")
-printPointer(of: str)
-print(MemoryLayout.size(ofValue: str))
-print("substr: \(substr)")
-printPointer(of: substr)
-print(MemoryLayout.size(ofValue: substr))
+let cyrillicCapitalLetterA: Character = "\u{0410}"
 
-str = nil
-print("---")
-print("str: \(str)")
-printPointer(of: str)
-print(MemoryLayout.size(ofValue: str))
-print("substr: \(substr)")
-printPointer(of: substr)
-print(MemoryLayout.size(ofValue: substr))
-
-substr = nil
-print("---")
-print("str: \(str)")
-printPointer(of: str)
-print(MemoryLayout.size(ofValue: str))
-print("substr: \(substr)")
-printPointer(of: substr)
-print(MemoryLayout.size(ofValue: substr))
-
+if latinCapitalLetterA != cyrillicCapitalLetterA {
+    print("These two characters aren't equivalent.")
+}
+// Prints "These two characters aren't equivalent."
