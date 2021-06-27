@@ -1,5 +1,6 @@
-let café = "caf\u{e9}"
-let cafe = "cafe\u{301}"
+for codeUnit in "Dog‼🐶".utf16 {
+    print(codeUnit)
+//    print(String(UnicodeScalar(codeUnit)!))
+}
 
-print(cafe == café)
-print("\u{41}" == "\u{410}")
+"hoge".unicodeScalars
