@@ -1,17 +1,17 @@
-func minMax(array: [Int]) -> (min: Int, max: Int)? {
-    if let min = array.min(),
-       let max = array.max() {
-//        return (min, max)
-        return (min: min, max: max)
-    } else {
-        return nil
-    }
+import Foundation
+
+func some(hoge hoge: String, hoge fuga: String) {
+    print(hoge, fuga)
 }
 
-minMax(array: Array(0...10))?.min
+some(hoge: "hoge", hoge: "fuga")
 
-let minMax: (min: Int, max: Int)
-minMax = (1, 2)
-minMax.min
+func geometricMean(_ data: Float...) -> Float {
+    var sum: Float = 1
+    for datum in data {
+        sum *= datum
+    }
+    return pow(sum, 1 / Float(data.count))
+}
 
-// let minMachs: (min: Int, machs: Int) = minMax
+print(geometricMean(2, 8))
