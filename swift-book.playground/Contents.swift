@@ -1,17 +1,11 @@
-import Foundation
-
-func some(hoge hoge: String, hoge fuga: String) {
-    print(hoge, fuga)
+func chooseStepFunction(backward: Bool) -> (Int, Any) -> Int {
+    func stepForward(input: Int, ignoring: Any) -> Int { return input + 1 }
+    func stepBackward(input: Int, ignoring this: Any) -> Int { return input - 1 }
+    return backward ? stepBackward : stepForward
 }
 
-some(hoge: "hoge", hoge: "fuga")
-
-func geometricMean(_ data: Float...) -> Float {
-    var sum: Float = 1
-    for datum in data {
-        sum *= datum
-    }
-    return pow(sum, 1 / Float(data.count))
+var currentValue = 10
+for _ in 0..<100 {
+    currentValue = chooseStepFunction(backward: currentValue > 0)(currentValue, 0)
+    print(currentValue)
 }
-
-print(geometricMean(2, 8))
