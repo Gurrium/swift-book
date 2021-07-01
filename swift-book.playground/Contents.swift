@@ -1,11 +1,8 @@
-func chooseStepFunction(backward: Bool) -> (Int, Any) -> Int {
-    func stepForward(input: Int, ignoring: Any) -> Int { return input + 1 }
-    func stepBackward(input: Int, ignoring this: Any) -> Int { return input - 1 }
-    return backward ? stepBackward : stepForward
-}
+let names: [String] = ["fuga", "hoge", "piyo"]
+let checker = { (_ seman: [String]) in assert(names.reversed().elementsEqual(seman)) }
 
-var currentValue = 10
-for _ in 0..<100 {
-    currentValue = chooseStepFunction(backward: currentValue > 0)(currentValue, 0)
-    print(currentValue)
-}
+checker(names.sorted(by: { (s0: String, s1: String) -> Bool in return s0 > s1 }))
+checker(names.sorted(by: { s0, s1 in return s0 > s1 }))
+checker(names.sorted(by: { s0, s1 in s0 > s1 }))
+checker(names.sorted(by: { $0 > $1 }))
+checker(names.sorted(by: >))
