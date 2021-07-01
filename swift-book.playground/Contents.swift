@@ -1,4 +1,4 @@
-let names: [String] = ["fuga", "hoge", "piyo"]
+let names = ["fuga", "hoge", "piyo"]
 let checker = { (_ seman: [String]) in assert(names.reversed().elementsEqual(seman)) }
 
 checker(names.sorted(by: { (s0: String, s1: String) -> Bool in return s0 > s1 }))
