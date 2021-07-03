@@ -1,37 +1,7 @@
-var completionHandlers: [() -> Void] = []
-func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
-    completionHandlers.append(completionHandler)
-}
-func someFunctionWithNonescapingClosure(closure: () -> Void) {
-    closure()
-}
+var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
 
-print("SomeClass")
-class SomeClass {
-    var x = 10
-    func doSomething() {
-        print(x) // => 10
-        someFunctionWithEscapingClosure { self.x = 100 } // (1)
-        someFunctionWithEscapingClosure { [self] in x = 200 } // (2)
-        completionHandlers.forEach { closure in
-            closure()
-            print(x)
-        }
-        // => 100
-        // => 200
-    }
+func serve(customer customerProvider: @autoclosure () -> String) {
+    print("Now serving \(customerProvider())!")
 }
-SomeClass().doSomething()
-
-print("SomeStruct")
-struct SomeStruct {
-    var x = 10
-    mutating func doSomething() {
-        print(x) // => 10
-        someFunctionWithNonescapingClosure { x = 200 }  // (3)
-        print(x) // => 200
-        // someFunctionWithEscapingClosure { x = 100 }  // (4)
-    }
-}
-var some = SomeStruct()
-some.doSomething()
+serve(customer: customersInLine.remove(at: 0))
+assert(1 == 1)
