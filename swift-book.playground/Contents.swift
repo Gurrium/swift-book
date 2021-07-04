@@ -1,7 +1,25 @@
-var customersInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
-
-func serve(customer customerProvider: @autoclosure () -> String) {
-    print("Now serving \(customerProvider())!")
+enum Liquid {
+    case vodka(Material)
+    case water
 }
-serve(customer: customersInLine.remove(at: 0))
-assert(1 == 1)
+
+class Material {
+    var name: String
+
+    init(_ name: String) {
+        self.name = name
+    }
+}
+
+let liquid = Liquid.vodka(Material("corn"))
+
+switch liquid {
+case .vodka(var material):
+    material.name = "rye"
+case .water:
+    print("water")
+}
+
+if case .vodka(let material) = liquid {
+    print(material.name) // => rye
+}
