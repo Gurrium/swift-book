@@ -1,25 +1,59 @@
-enum Liquid {
-    case vodka(Material)
-    case water
+enum ArithmeticExpression {
+    case number(Int)
+    indirect case addition(ArithmeticExpression, ArithmeticExpression)
+    indirect case multiplication(ArithmeticExpression, ArithmeticExpression)
 }
 
-class Material {
-    var name: String
-
-    init(_ name: String) {
-        self.name = name
+func evaluate(_ expression: ArithmeticExpression) -> Int {
+    switch expression {
+    case let .number(value):
+        return value
+    case let .addition(left, right):
+        return evaluate(left) + evaluate(right)
+    case let .multiplication(left, right):
+        return evaluate(left) * evaluate(right)
     }
 }
 
-let liquid = Liquid.vodka(Material("corn"))
+let five = ArithmeticExpression.number(5)
+let four = ArithmeticExpression.number(4)
+let sum = ArithmeticExpression.addition(five, four)
+let product = ArithmeticExpression.multiplication(sum, ArithmeticExpression.number(2))
+print(evaluate(product))
 
-switch liquid {
-case .vodka(var material):
-    material.name = "rye"
-case .water:
-    print("water")
+indirect enum BinTree {
+    case inner(left: BinTree, right: BinTree, value: Int)
+    case leaf(value: Int)
 }
 
-if case .vodka(let material) = liquid {
-    print(material.name) // => rye
+func inOrderTraverse(_ tree: BinTree) {
+    switch tree {
+    case let .inner(left, right, value):
+        inOrderTraverse(left)
+        print(value)
+        inOrderTraverse(right)
+    case let .leaf(value):
+        print(value)
+    }
 }
+
+let tree = BinTree.inner(
+    left: .inner(
+        left: .leaf(value: 0),
+        right: .inner(
+            left: .leaf(value: 2),
+            right: .leaf(value: 4),
+            value: 3),
+        value: 1),
+    right: .leaf(value: 6),
+    value: 5)
+
+inOrderTraverse(tree)
+// =>
+// 0
+// 1
+// 2
+// 3
+// 4
+// 5
+// 6
