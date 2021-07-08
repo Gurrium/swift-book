@@ -1,27 +1,23 @@
-func check(_ actual: [String]) {
-    var expected: [String] = []
-    for i in 1...100 {
-        let tmp: String = {
-            if i % 3 == 0 {
-                return i % 5 == 0 ? "fizzbuzz" : "fizz"
-            }else  if i % 5 == 0 {
-                return "buzz"
-            } else {
-                return "\(i)"
-            }
-        }()
-        expected.append(tmp)
-    }
-
-    for (e, a) in zip(expected, actual) {
-        print(e, a, separator: " ")
-    }
-
-    assert(expected.elementsEqual(actual))
+struct Resolution {
+    var width = 0
+    var height = 0
+}
+class VideoMode {
+    var resolution = Resolution()
+    var interlaced = false
+    var frameRate = 0.0
+    var name: String?
 }
 
-//let actual = (1...100).map {"\($0 % 3 == 0 ? "fizz" : ($0 % 5 != 0 ? "\($0)" : ""))\($0 % 5 == 0 ? "buzz" : "")" }
-let actual = (1...100).map{($0 % 3==0 ?"fizz":($0 % 5==0 ?"":"\($0)"))+($0 % 5==0 ?"buzz":"")}
-//let actual = (1...100).map {"\($0 % 3 == 0 ? "fizz" : ($0 % 5 != 0 ? "\($0)" : ""))\($0 % 5 == 0 ? "buzz" : "")" }
+let hd = Resolution(width: 1920, height: 1080)
+let tenEighty = VideoMode()
+tenEighty.resolution = hd
+tenEighty.interlaced = true
+tenEighty.name = "1080i"
+tenEighty.frameRate = 25.0
 
-check(actual)
+let alsoTenEighty = tenEighty
+alsoTenEighty.frameRate = 30.0
+
+print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+// Prints "The frameRate property of tenEighty is now 30.0"
