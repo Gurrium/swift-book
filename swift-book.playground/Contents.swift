@@ -1,23 +1,33 @@
-struct Resolution {
-    var width = 0
-    var height = 0
-}
-class VideoMode {
-    var resolution = Resolution()
-    var interlaced = false
-    var frameRate = 0.0
-    var name: String?
+class DataImporter {
+    var filename = "data.txt"
+
+    init() {
+        print("Initialize DataImporter")
+    }
 }
 
-let hd = Resolution(width: 1920, height: 1080)
-let tenEighty = VideoMode()
-tenEighty.resolution = hd
-tenEighty.interlaced = true
-tenEighty.name = "1080i"
-tenEighty.frameRate = 25.0
+class DataManager {
+    lazy var importer = DataImporter()
+    var data: [String] = []
+}
 
-let alsoTenEighty = tenEighty
-alsoTenEighty.frameRate = 30.0
+//let manager = DataManager()
+//print("Add Some data")
+//manager.data.append("Some data")
+//print("Add Some more data")
+//manager.data.append("Some more data")
+//print("Add Some data")
+//print(manager.importer.filename)
 
-print("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
-// Prints "The frameRate property of tenEighty is now 30.0"
+// マルチスレッドのテスト
+import Foundation
+
+let someManager = DataManager()
+DispatchQueue.init(label: "first").async {
+    print("first")
+    someManager.importer.filename
+}
+DispatchQueue.init(label: "second").async {
+    print("second")
+    someManager.importer.filename
+}
