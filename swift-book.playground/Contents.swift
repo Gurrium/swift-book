@@ -1,33 +1,32 @@
-class DataImporter {
-    var filename = "data.txt"
-
-    init() {
-        print("Initialize DataImporter")
+struct Cup {
+    var content: String {
+        willSet {
+            print("willSet:", newValue)
+        }
+        didSet {
+            print("didSet:", content)
+        }
     }
 }
 
-class DataManager {
-    lazy var importer = DataImporter()
-    var data: [String] = []
+func replace(_ newContet: String, from oldContent: inout String) {
+    print("before pouring")
+    oldContent = newContet
+    print("after pouring")
 }
 
-//let manager = DataManager()
-//print("Add Some data")
-//manager.data.append("Some data")
-//print("Add Some more data")
-//manager.data.append("Some more data")
-//print("Add Some data")
-//print(manager.importer.filename)
+func doNothing(_ content: inout String) {}
 
-// マルチスレッドのテスト
-import Foundation
-
-let someManager = DataManager()
-DispatchQueue.init(label: "first").async {
-    print("first")
-    someManager.importer.filename
-}
-DispatchQueue.init(label: "second").async {
-    print("second")
-    someManager.importer.filename
-}
+var coffeeCup = Cup(content: "")
+print("call replace")
+replace("coffee", from: &(coffeeCup.content))
+print("call doNothing")
+doNothing(&(coffeeCup.content))
+// => call replace
+// => before pouring
+// => after pouring
+// => willSet: coffee
+// => didSet: coffee
+// => call doNothing
+// => willSet: coffee
+// => didSet: coffee
