@@ -1,24 +1,10 @@
-class SomeClass {
-    static var storedTypeProperty = "Some value."
-//    class var overrideableStoredTypeProperty = "Some value."
-    static var computedTypeProperty: Int {
-        return 27
-    }
-    class var overrideableComputedTypeProperty: Int {
-        return 107
+struct Point {
+    var x = 0.0, y = 0.0
+    mutating func moveBy(x deltaX: Double, y deltaY: Double) {
+        x += deltaX
+        y += deltaY
     }
 }
-
-class SubClass: SomeClass {
-    override static var overrideableComputedTypeProperty: Int {
-        2
-    }
-}
-
-class SubSubClass: SubClass {
-//    SubClassでstatic varとなっているのでこれはできない
-//    override static var overrideableComputedTypeProperty: Int {
-//        2
-//    }
-}
-print(SubClass.overrideableComputedTypeProperty) // => 2
+var somePoint = Point(x: 1.0, y: 1.0)
+somePoint.moveBy(x: 2.0, y: 3.0)
+print("The point is now at (\(somePoint.x), \(somePoint.y))")
