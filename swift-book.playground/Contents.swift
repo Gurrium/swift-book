@@ -1,23 +1,19 @@
-enum Planet: Int {
-    case mercury = 1, venus, earth, mars, jupiter, saturn, uranus, neptune
-    static subscript(n: Int) -> Planet {
-        return Planet(rawValue: n)!
+class Vehicle {
+    var currentSpeed = 0.0
+    var description: String {
+        return "traveling at \(currentSpeed) kilometer per hour"
+    }
+    func makeNoise() {
+        // do nothing - an arbitrary vehicle doesn't necessarily make a noise
     }
 }
-let mars = Planet[4]
-print(mars)
+let someVehicle = Vehicle()
+print("Vehicle: \(someVehicle.description)")
 
-enum Env {
-    static var envs: [String: String] = [:]
-
-    static subscript(_ name: String) -> String? {
-        get {
-            return envs[name]
-        }
-        set {
-            envs[name] = newValue
-        }
-    }
+class Bicycle: Vehicle {
+    var hasBasket = false
 }
-Env["hoge"] = "hoge"
-print(Env["hoge"])
+let someBicycle = Bicycle()
+someBicycle.hasBasket = true
+someBicycle.currentSpeed = 15.0
+print(someBicycle.description)
