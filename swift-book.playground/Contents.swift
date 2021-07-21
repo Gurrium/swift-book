@@ -40,3 +40,24 @@ car.currentSpeed = 25.0
 car.gear = 3
 print("Car: \(car.description)")
 // Car: traveling at 25.0 miles per hour in gear 3
+
+class AutomaticCar: Car {
+    override var currentSpeed: Double {
+        didSet {
+            gear = Int(currentSpeed / 10.0) + 1
+        }
+    }
+}
+
+let automatic = AutomaticCar()
+automatic.currentSpeed = 35.0
+print("AutomaticCar: \(automatic.description)")
+// AutomaticCar: traveling at 35.0 miles per hour in gear 4
+
+class Sup {
+    final var finalHoge = "finalHoge"
+}
+
+class Sub: Sup {
+    override var finalHoge = "окончательныйHoge" // compile error
+}
