@@ -1,63 +1,13 @@
-class Vehicle {
-    var currentSpeed = 0.0
-    var description: String {
-        return "traveling at \(currentSpeed) kilometer per hour"
-    }
-    func makeNoise() {
-        // do nothing - an arbitrary vehicle doesn't necessarily make a noise
-    }
-}
-let someVehicle = Vehicle()
-print("Vehicle: \(someVehicle.description)")
+class Hoge {
+    let hoge: String
 
-class Bicycle: Vehicle {
-    var hasBasket = false
-}
-let someBicycle = Bicycle()
-someBicycle.hasBasket = true
-someBicycle.currentSpeed = 15.0
-print(someBicycle.description)
-
-class Train: Vehicle {
-    override func makeNoise() {
-        print("Choo Choo")
+    init() {
+        hoge = "super hoge"
     }
 }
 
-let train = Train()
-train.makeNoise()
-// Prints "Choo Choo"
-
-class Car: Vehicle {
-    var gear = 1
-    override var description: String {
-        return super.description + " in gear \(gear)"
+class Fuga: Hoge {
+    override init() {
+        hoge = "sub hoge" // Cannot assign to property: 'hoge' is a 'let' constant
     }
-}
-
-let car = Car()
-car.currentSpeed = 25.0
-car.gear = 3
-print("Car: \(car.description)")
-// Car: traveling at 25.0 miles per hour in gear 3
-
-class AutomaticCar: Car {
-    override var currentSpeed: Double {
-        didSet {
-            gear = Int(currentSpeed / 10.0) + 1
-        }
-    }
-}
-
-let automatic = AutomaticCar()
-automatic.currentSpeed = 35.0
-print("AutomaticCar: \(automatic.description)")
-// AutomaticCar: traveling at 35.0 miles per hour in gear 4
-
-class Sup {
-    final var finalHoge = "finalHoge"
-}
-
-class Sub: Sup {
-    override var finalHoge = "окончательныйHoge" // compile error
 }
