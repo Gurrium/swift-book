@@ -1,13 +1,10 @@
-class Hoge {
-    let hoge: String
 
-    init() {
-        hoge = "super hoge"
-    }
+import Foundation
+class ShoppingListItem {
+    let id = UUID()
+    var name: String?
+    var quantity = 1
+    var purchased = false
 }
-
-class Fuga: Hoge {
-    override init() {
-        hoge = "sub hoge" // Cannot assign to property: 'hoge' is a 'let' constant
-    }
-}
+var item = ShoppingListItem()
+print(item.id)
