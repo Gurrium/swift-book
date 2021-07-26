@@ -1,29 +1,20 @@
 class Sup {
     let str: String
 
-    init() {
-        print("Sup init")
-        str = "str"
+    init(_ str: String) {
+        self.str = str
+    }
+
+    convenience init(isHoge: Bool) {
+        self.init(isHoge ? "hoge" : "")
     }
 }
 
 class Sub: Sup {
-    init(str: String) {
-        print("Sub init", str)
-    }
-
-    convenience override init() {
-        print("Sub convenience init")
-        self.init(str: "some")
+    init() {
+        super.init("str")
     }
 }
 
-Sub().str
-print("---")
-Sub(str: "some")
-// Sub convenience init
-// Sub init some
-// Sup init
-// ---
-// Sub init some
-// Sup init
+print(Sub("str").str)
+print(Sub(isHoge: true).str)
