@@ -1,50 +1,27 @@
-class Food: CustomStringConvertible {
-    var name: String
-    var description: String {
-        "name: \(name)"
-    }
+class Sup {
+    var name: String?
 
-    init(name: String) {
+    init() {}
+
+    init?(name: String) {
+        if name.isEmpty { return nil }
         self.name = name
     }
-    convenience init() {
-        self.init(name: "[Unnamed]")
+}
+
+class Sub: Sup {
+    // Failable initializer 'init()' cannot override a non-failable initializer
+//    override init?() {
+//        return nil
+//    }
+
+    override init(name: String) {
+        super.init(name: "empty")!
     }
 }
 
-print(Food(name: "Banana"))
-print(Food())
+print(Sup(name: "")?.name)
+print(Sub(name: "").name)
 
-class RecipeIngredient: Food {
-    var quantity: Int
-    override var description: String {
-        super.description + ", quantity: \(quantity)"
-    }
-
-    init(name: String, quantity: Int) {
-        self.quantity = quantity
-        super.init(name: name)
-    }
-    override convenience init(name: String) {
-        self.init(name: name, quantity: 1)
-    }
-}
-
-// サブクラス独自のDesignated Initializerを実装しているので自動的には継承されないが，
-// スーパークラスのDesignated Initializerを全て実装しているのでConvenience Initializerが継承される
-print(RecipeIngredient(name: "Egg", quantity: 12))
-print(RecipeIngredient(name: "Apple"))
-print(RecipeIngredient())
-
-class ShoppingListItem: RecipeIngredient {
-    var purchased = false
-    override var description: String {
-        super.description + ", purchased: \(purchased)"
-    }
-}
-
-// サブクラス独自のDesignated Initializerを実装していないので，
-// スーパークラスのDesignated InitializerとConvenience Initializerが全て継承される
-print(ShoppingListItem(name: "Milk", quantity: 1))
-print(ShoppingListItem(name: "Onion"))
-print(ShoppingListItem())
+// nil
+// Optional("empty")
