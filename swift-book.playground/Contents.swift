@@ -1,27 +1,28 @@
-class Sup {
-    var name: String?
+class Wrapped {
+    let num: Int
 
-    init() {}
+    init?(_ numString: String) {
+        if let converted = Int(numString) {
+            num = converted
+        }
 
-    init?(name: String) {
-        if name.isEmpty { return nil }
-        self.name = name
+        return nil
     }
 }
 
-class Sub: Sup {
-    // Failable initializer 'init()' cannot override a non-failable initializer
-//    override init?() {
-//        return nil
-//    }
+class Unwrapped {
+    let num: Int
 
-    override init(name: String) {
-        super.init(name: "empty")!
+    init!(_ numString: String) {
+        if let converted = Int(numString) {
+            num = converted
+        } else {
+            num = 0
+        }
     }
 }
 
-print(Sup(name: "")?.name)
-print(Sub(name: "").name)
-
-// nil
-// Optional("empty")
+// unwrapが必要
+print(Wrapped("NaN")?.num) // nil
+// unwrapが不要
+print(Unwrapped("NaN").num) // 0
