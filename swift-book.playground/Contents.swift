@@ -1,8 +1,15 @@
-struct Hoge {
-    let nonOptional: String
-    let optional: String?
+enum Thrower {
+    struct SomeError: Error {}
+
+    static func throwsError() throws -> Void {
+        throw SomeError()
+    }
 }
 
-let hoge: Hoge? = Hoge(nonOptional: "some", optional: nil)
-print(type(of: hoge?.nonOptional)) // Optional<String>
-print(type(of: hoge?.optional)) // Optional<String>
+enum Caller {
+    static func call() throws {
+        try Thrower.throwsError()
+    }
+}
+
+try Caller.call()
