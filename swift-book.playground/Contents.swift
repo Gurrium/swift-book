@@ -1,39 +1,14 @@
-struct DummyError: Error {}
+import Foundation
 
-let closureCanThrow = {
-    defer {
-        print("first defer")
-    }
-
-    defer {
-        print("second defer")
-    }
-    if Bool.random() {
-        print("throws DummyError")
-        throw DummyError()
-    }
-
-    print("not thrown")
+func asyncFunc() async -> String {
+    await Task.sleep(1 * 1_000_000_000)
+    return "async result"
+}
+func nonAsyncFunc() -> String {
+    "non-async result"
 }
 
-for i in 1...4 {
-    print(i)
-    try? closureCanThrow()
-}
-
-// 1
-// throws DummyError
-// second defer
-// first defer
-// 2
-// throws DummyError
-// second defer
-// first defer
-// 3
-// not thrown
-// second defer
-// first defer
-// 4
-// not thrown
-// second defer
-// first defer
+let asyncResult = asyncFunc()
+print(asyncResult)
+let nonAsyncResult = nonAsyncFunc()
+print(nonAsyncResult)
