@@ -1,14 +1,25 @@
 import Foundation
 
-func asyncFunc() async -> String {
-    await Task.sleep(1 * 1_000_000_000)
-    return "async result"
-}
-func nonAsyncFunc() -> String {
-    "non-async result"
+struct SomeSequence: Sequence {
+    func makeIterator() -> some IteratorProtocol {
+        return SomeIterator()
+    }
 }
 
-let asyncResult = asyncFunc()
-print(asyncResult)
-let nonAsyncResult = nonAsyncFunc()
-print(nonAsyncResult)
+struct SomeIterator: IteratorProtocol {
+    private var _limit = 5
+
+    mutating func next() -> Bool? {
+        if _limit < 0 {
+            return nil
+        } else {
+            _limit -= 1
+            return Bool.random()
+        }
+    }
+}
+
+
+for i in SomeSequence() {
+    print(i)
+}
