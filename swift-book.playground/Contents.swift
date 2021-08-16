@@ -1,25 +1,20 @@
 import Foundation
+import _Concurrency
 
-struct SomeSequence: Sequence {
-    func makeIterator() -> some IteratorProtocol {
-        return SomeIterator()
-    }
+struct Photo {}
+
+func downloadPhoto(named: String) async -> Photo {
+    await Task.sleep(2 * 1_000_000_000)
+    return Photo()
 }
 
-struct SomeIterator: IteratorProtocol {
-    private var _limit = 5
+Task<[Photo], Never>(priority: nil, operation: {
+    async let firstPhoto = downloadPhoto(named: "first")
+    async let secondPhoto = downloadPhoto(named: "second")
+    async let thirdPhoto = downloadPhoto(named: "third")
 
-    mutating func next() -> Bool? {
-        if _limit < 0 {
-            return nil
-        } else {
-            _limit -= 1
-            return Bool.random()
-        }
-    }
-}
+    let photos = await [firstPhoto, secondPhoto, thirdPhoto]
+    print(photos)
 
-
-for i in SomeSequence() {
-    print(i)
-}
+    return photos
+})
