@@ -8,13 +8,40 @@ func downloadPhoto(named: String) async -> Photo {
     return Photo()
 }
 
-Task<[Photo], Never>(priority: nil, operation: {
-    async let firstPhoto = downloadPhoto(named: "first")
-    async let secondPhoto = downloadPhoto(named: "second")
-    async let thirdPhoto = downloadPhoto(named: "third")
+Task {
+    // unstructured concurrency
+    let handle =
+    // structured concurrency
+    Task { // parent task
+        await withTaskGroup(of: Photo.self) { taskGroup in
+            let photoNames = ["a", "b"]
+            for name in photoNames {
+                taskGroup.addTask { // child task
+                    return await downloadPhoto(named: name)
+                }
+            }
+        }
+    }
+    // structured concurrency
 
-    let photos = await [firstPhoto, secondPhoto, thirdPhoto]
-    print(photos)
+    _ = await handle.result
+    // unstructured concurrency
+}
 
-    return photos
-})
+//func downloadThumbail() async -> Photo { return Photo() }
+//func downloadTitle() async -> String { return "Title" }
+//struct Series {
+//    let title: String
+//    let thumbnail: Photo
+//}
+//
+//await withTaskGroup(of: Void.self) { taskGroup in
+//    taskGroup.addTask {
+//        await downloadThumbnail()
+//    }
+//    taskGroup.addTask {
+//        await downloadTitle()
+//    }
+//}
+//
+//_ = await [thumbnail, title]
