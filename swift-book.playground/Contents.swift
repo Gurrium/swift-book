@@ -1,16 +1,15 @@
-struct OuterStruct {
-    struct InnerStruct {
-        let some: String
-    }
+import Foundation
 
-    actor InnerActor {
-        let immutable = "immutable"
+extension Int {
+    subscript(digitIndex: Int) -> Int {
+        var decimalBase = 1
+        for _ in 0..<digitIndex {
+            decimalBase *= 10
+        }
+        return (self / decimalBase) % 10
     }
-
-    let innerStruct: InnerStruct
-    let innerActor: InnerActor
 }
 
-let outer = OuterStruct(innerStruct: .init(some: "some"), innerActor: .init())
-outer.innerStruct.some
-outer.innerActor.immutable
+//12345[19]
+print(Float(Int.max) < pow(10, 18))
+print(Float(Int.max) < pow(10, 19))
