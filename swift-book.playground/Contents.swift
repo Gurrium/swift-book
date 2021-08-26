@@ -1,19 +1,7 @@
-protocol SomeDelegate: AnyObject {
-    var some: String { get }
+struct Hoge: CustomStringConvertible {
+    var description: String = "hoge"
 }
-
-// Non-class type 'Kome' cannot conform to class protocol 'SomeDelegate'
-// struct Kome: Some {}
-
-class Yome: SomeDelegate {
-    var some = "somep"
+let arr: [CustomStringConvertible] = [1, 1.0, "a", Hoge()]
+for e in arr {
+    print(e)
 }
-
-class Hoge {
-    var delegate: SomeDelegate?
-
-    init() {}
-}
-Hoge()
-
-protocol AnyDelegate: SomeDelegate {}
