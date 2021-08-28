@@ -1,32 +1,48 @@
-protocol Named {
-    var name: String { get }
+import Foundation
+
+@objc protocol CounterDataSource {
+    @objc optional func increment(forCount count: Int) -> Int
+    @objc optional var fixedIncrement: Int { get }
 }
 
-class Location {
-    var latitude: Double
-    var longitude: Double
-    init(latitude: Double, longitude: Double) {
-        self.latitude = latitude
-        self.longitude = longitude
+class Counter {
+    private(set) var count: Int
+    var dataSource: CounterDataSource?
+
+    init(count: Int) {
+        self.count = count
+    }
+
+    func increment() {
+        if let amount = dataSource?.increment?(forCount: count) {
+            count += amount
+        } else if let amount = dataSource?.fixedIncrement {
+            count += amount
+        }
     }
 }
 
-class City: Location, Named {
-    var name: String
-    init(name: String, latitude: Double, longitude: Double) {
-        self.name = name
-        super.init(latitude: latitude, longitude: longitude)
+class TargetCounter: CounterDataSource {
+    private var target: Int = 0
+
+    init(target: Int) {
+        self.target = target
+    }
+
+    func increment(forCount count: Int) -> Int {
+        if count == target {
+            return 0
+        } else if count > target {
+            return -1
+        } else {
+            return 1
+        }
     }
 }
 
-func beginConcert(in location: Location & Named) {
-    print("Hello, \(location.name)!")
+let counter = Counter(count: 90)
+counter.dataSource = TargetCounter(target: 100)
+for _ in 0...15 {
+    print(counter.count)
+    counter.increment()
 }
-
-let seattle = City(name: "Seattle", latitude: 47.6, longitude: -122.3)
-beginConcert(in: seattle)
-
-func test(in location: City & Named) {
-    print("location.name:", location.name)
-}
-test(in: seattle)
