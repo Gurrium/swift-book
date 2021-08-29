@@ -1,48 +1,72 @@
-import Foundation
+import SwiftUI
 
-@objc protocol CounterDataSource {
-    @objc optional func increment(forCount count: Int) -> Int
-    @objc optional var fixedIncrement: Int { get }
-}
-
-class Counter {
-    private(set) var count: Int
-    var dataSource: CounterDataSource?
-
-    init(count: Int) {
-        self.count = count
+struct SomeView: View {
+    var body: some View {
+        Rectangle()
+            .padding([.top, .bottom])
+            .foregroundColor(.blue)
+        Rectangle()
+            .padding(.top)
+            .padding(.bottom)
+            .foregroundColor(.red)
     }
+}
+SomeView()
+//
+//enum Custom {
+//    enum Edge {
+//        typealias Set = [Element]
+//
+//        struct Element {
+//            static let top = Self("top")
+//            static let bottom = Self("bottom")
+//
+//            let kind: String
+//            init(_ kind: String) {
+//                self.kind = kind
+//            }
+//        }
+//    }
+//}
+//
+//extension Array where Element == Custom.Edge.Element {
+//    static let top = [Element("top")]
+//    static let bottom = [Element("bottom")]
+//}
+//
+//func some(_ set: Custom.Edge.Set) {
+//    print(set)
+//}
+//
+//some(.top)
+//some([.top, .bottom])
+//some([.top, [[.bottom]]]) // error
 
-    func increment() {
-        if let amount = dataSource?.increment?(forCount: count) {
-            count += amount
-        } else if let amount = dataSource?.fixedIncrement {
-            count += amount
+enum Custom {
+    enum Edge {
+        struct Set: ExpressibleByArrayLiteral {
+            typealias ArrayLiteralElement = Self
+
+            let rawValue: Int
+
+            static let top = Self(rawValue: 1 << 0)
+            static let bottom = Self(rawValue: 1 << 1)
+
+            init(rawValue: Int) {
+                self.rawValue = rawValue
+            }
+
+            init(arrayLiteral elements: Custom.Edge.Set...) {
+                rawValue = elements.reduce(0) { $0 | $1.rawValue }
+            }
         }
     }
 }
 
-class TargetCounter: CounterDataSource {
-    private var target: Int = 0
-
-    init(target: Int) {
-        self.target = target
-    }
-
-    func increment(forCount count: Int) -> Int {
-        if count == target {
-            return 0
-        } else if count > target {
-            return -1
-        } else {
-            return 1
-        }
-    }
+func some(_ set: Custom.Edge.Set) {
+    print(set)
 }
 
-let counter = Counter(count: 90)
-counter.dataSource = TargetCounter(target: 100)
-for _ in 0...15 {
-    print(counter.count)
-    counter.increment()
-}
+some(.top)
+some([.top, .bottom])
+some([.top, [[.bottom]]])
