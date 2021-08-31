@@ -1,27 +1,24 @@
-import Foundation
-
-protocol Hoge {
-    associatedtype FirstConstrationType
-    associatedtype SecondConstrationType
-
-    func plint()
-}
-
-extension Hoge where FirstConstrationType == String {
-    func plint() {
-        print("only first")
+struct Stack<Element> {
+    var items: [Element] = []
+    mutating func push(_ item: Element) {
+        items.append(item)
+    }
+    mutating func pop() -> Element {
+        return items.removeLast()
     }
 }
 
-extension Hoge where FirstConstrationType == String, SecondConstrationType == String {
-    func plint() {
-        print("first and second")
+extension Stack {
+    func peek() -> Element? {
+        items.isEmpty ? nil : items[items.count - 1]
     }
 }
 
-struct Impl: Hoge {
-    typealias FirstConstrationType = String
-    typealias SecondConstrationType = String
+var intStack = Stack<Int>()
+intStack.push(3)
+intStack.push(5)
+intStack.push(1)
+intStack.push(8)
+if let topMost = intStack.peek() {
+    print(topMost)
 }
-
-Impl().plint()
