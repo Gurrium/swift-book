@@ -3,45 +3,42 @@ protocol Shape {
 }
 
 struct Triangle: Shape {
-    var size: Int
     func draw() -> String {
-        var result: [String] = []
-        for length in 1...size {
-            result.append(String(repeating: "*", count: length))
-        }
-        return result.joined(separator: "\n")
+        return """
+            *
+            **
+            ***
+            """
     }
 }
 
-struct FlippedShape<T: Shape>: Shape {
-    var shape: T
-    func draw() -> String {
-        let lines = shape.draw().split(separator: "\n")
-        return lines.reversed().joined(separator: "\n")
-    }
+let body = {
+    Triangle()
 }
 
-struct JoinedShape<T: Shape, U: Shape>: Shape {
-    var top: T
-    var bottom: U
-    func draw() -> String {
-        return top.draw() + "\n" + bottom.draw()
-    }
+func makeTriangle() -> some Shape {
+    body()
 }
 
-let smallTriangle = Triangle(size: 3)
-let flippedTriangle = FlippedShape(shape: smallTriangle)
-let joinedTriangles = JoinedShape(top: smallTriangle, bottom: flippedTriangle)
-print("Non-Opaque Type")
-print(joinedTriangles.draw())
+func protoMakeTriangle() -> Shape {
+    body()
+}
+
+
+let triangle = makeTriangle()
+print(triangle.draw())
+// *
+// **
+// ***
+let protoTriangle = protoMakeTriangle()
+print(protoTriangle.draw())
+// *
+// **
+// ***
 
 func flip<T: Shape>(_ shape: T) -> some Shape {
-    return FlippedShape(shape: shape)
-}
-func join<T: Shape, U: Shape>(_ top: T, _ bottom: U) -> some Shape {
-    JoinedShape(top: top, bottom: bottom)
+    return Triangle()
 }
 
-let opaqueJoinedTriangles = join(smallTriangle, flip(smallTriangle))
-print("Opaque Type")
-print(opaqueJoinedTriangles.draw())
+flip(triangle)
+// flip(protoTriangle) // Protocol 'Shape' as a type cannot conform to the protocol itself
