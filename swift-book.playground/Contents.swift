@@ -1,44 +1,23 @@
-protocol Shape {
-    func draw() -> String
-}
+class Ownee {
+    init() {
+        print("Ownee is initialized")
+    }
 
-struct Triangle: Shape {
-    func draw() -> String {
-        return """
-            *
-            **
-            ***
-            """
+    deinit {
+        print("Ownee is deinitialized")
+    }
+}
+struct Owner {
+    weak var ownee: Ownee? {
+        didSet {
+            print("ownee is set to", ownee ?? "nil")
+        }
     }
 }
 
-let body = {
-    Triangle()
-}
+var ownee: Ownee? = Ownee()
+var owner = Owner()
+owner.ownee = ownee
+ownee = nil
+print("owner.ownee is", owner.ownee ?? "nil")
 
-func makeTriangle() -> some Shape {
-    body()
-}
-
-func protoMakeTriangle() -> Shape {
-    body()
-}
-
-
-let triangle = makeTriangle()
-print(triangle.draw())
-// *
-// **
-// ***
-let protoTriangle = protoMakeTriangle()
-print(protoTriangle.draw())
-// *
-// **
-// ***
-
-func flip<T: Shape>(_ shape: T) -> some Shape {
-    return Triangle()
-}
-
-flip(triangle)
-// flip(protoTriangle) // Protocol 'Shape' as a type cannot conform to the protocol itself
