@@ -1,27 +1,17 @@
-class HTMLElement {
-    let name: String
-    let text: String?
+var stepSize = 1
 
-    lazy var asHTML: () -> String = {
-        [unowned unownedSelf = self, unowned elem = HTMLElement(name: "h3")] in
-        if let text = unownedSelf.text {
-            return "<\(unownedSelf.name)>\(text)</\(unownedSelf.name)>"
-        } else {
-            return "<\(unownedSelf.name) />"
-        }
-    }
-
-    init(name: String, text: String? = nil) {
-        self.name = name
-        self.text = text
-    }
-
-    deinit {
-        print("\(name) is being deinitialized")
-    }
-
+func increment(_ number: inout Int) {
+    number += stepSize
 }
 
-var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
-print(paragraph!.asHTML())
-paragraph = nil
+increment(&stepSize) // error
+
+func balance(_ x: inout Int, _ y: inout Int) {
+    let sum = x + y
+    x = sum / 2
+    y = sum - x
+}
+var playerOneScore = 42
+var playerTwoScore = 30
+balance(&playerOneScore, &playerTwoScore)
+balance(&playerOneScore, &playerOneScore) // error
