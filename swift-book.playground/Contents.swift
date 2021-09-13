@@ -1,13 +1,8 @@
-struct Soem {
-    private var _computed = 0
-    private(set) var computed: Int {
-        get {
-            _computed
-        }
-        set {
-            _computed = newValue
-        }
-    }
+fileprivate protocol PrivateProtocol {
+    var prop: String { get }
 }
 
-Soem().computed
+public class PublicClass: PrivateProtocol {
+//    private var prop = "" // Property 'prop' must be declared fileprivate because it matches a requirement in fileprivate protocol 'PrivateProtocol'
+    internal var prop = ""
+}
