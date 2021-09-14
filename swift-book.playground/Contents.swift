@@ -1,8 +1,4 @@
-fileprivate protocol PrivateProtocol {
-    var prop: String { get }
-}
-
-public class PublicClass: PrivateProtocol {
-//    private var prop = "" // Property 'prop' must be declared fileprivate because it matches a requirement in fileprivate protocol 'PrivateProtocol'
-    internal var prop = ""
-}
+let firstBits: UInt8 = 0b00010100
+let otherBits: UInt8 = 0b00000101
+let outputBits = firstBits ^ otherBits
+print(outputBits)
