@@ -1,4 +1,7 @@
-let firstBits: UInt8 = 0b00010100
-let otherBits: UInt8 = 0b00000101
-let outputBits = firstBits ^ otherBits
-print(outputBits)
+//let bits: UInt8 = 128
+//(bits << 1) >> 1
+
+let neg: Int8 = -1
+let pos: Int8 = 1
+print(neg >> 999)
+print(pos >> 2)
