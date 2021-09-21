@@ -1,2 +1,8 @@
-print(0x1p1) // 2.0
-print(1.0e1) // 10
+let str = """
+1
+2
+3
+4
+"""
+print(str)
+print(str.unicodeScalars.map(\.value))
