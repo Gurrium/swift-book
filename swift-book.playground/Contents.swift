@@ -1,13 +1,4 @@
-let external: (() -> Void) -> Void = { _ in () }
-func takesTwoFunctions(first: (() -> Void) -> Void, second: (() -> Void) -> Void) {
-//    first { first {} }       // Error
-//    second { second {}  }    // Error
-//
-//    first { second {} }      // Error
-//    second { first {} }      // Error
+struct Hoge: Hashable {}
 
-    first { external {} }    // OK
-    external { first {} }    // OK
-}
-
-takesTwoFunctions(first: { _ in }, second: { _ in })
+let dict: [Hoge: String] = [.init(): "aaa"]
+print(dict.keys, dict.values)
