@@ -1,4 +1,8 @@
-struct Hoge: Hashable {}
+let hoge: Int? = nil
 
-let dict: [Hoge: String] = [.init(): "aaa"]
-print(dict.keys, dict.values)
+switch hoge{
+case .none:
+    print("hoge is nil")
+case .some(let unwrapped):
+    print(unwrapped)
+}
