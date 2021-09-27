@@ -1,12 +1,9 @@
-import Foundation
-
-class User {}
-typealias EquatableUser = User & Equatable
-
-class NewUser: EquatableUser {
-    let id = UUID()
-
-    static func == (lhs: NewUser, rhs: NewUser) -> Bool {
-        lhs.id == rhs.id
-    }
-}
+struct Hoge {}
+print(
+    Hoge().self, // Hoge()
+    type(of: Hoge()), // Hoge
+    Hoge.self, // Hoge
+    // type(of: Hoge), // error: Expected member name or constructor call after type name
+    Hoge.self.self, // Hoge
+    type(of: Hoge.self) // Hoge.Type
+)
