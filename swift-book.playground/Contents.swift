@@ -1,16 +1,16 @@
-let arr: [Any] = ["hoge", 1]
-
-print(type(of: arr[0]), type(of: arr.first), type(of: arr.first!)) // String Optional<Any> String
-
-class Sup {
-    func f() -> Self { self }
-    func g() -> String { "Sup" }
+func some() throws -> Int {
+    3628800 / Int.random(in: 0...10)
 }
 
-class Sub: Sup {
-    override func g() -> String { "Sub" }
+func other() throws -> Int {
+    120 / Int.random(in: 0...5)
 }
 
-let sub: Sup = Sub()
-print(type(of: sub.f())) // Sub
-print(sub.g()) // Sub
+try! some() + other()
+try! (some() + other())
+(try! some()) + (try! other())
+
+func otherr() -> Int {
+    120 / Int.random(in: 1...5)
+}
+try? some() + otherr()
