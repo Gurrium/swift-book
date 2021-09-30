@@ -1,16 +1,15 @@
-func some() throws -> Int {
-    3628800 / Int.random(in: 0...10)
+//import Foundation
+//
+//struct MyError: LocalizedError {
+//    var errorDescription: String? = "myError description"
+//}
+//
+//print(MyError().localizedDescription)
+
+import Foundation
+
+struct MyError: LocalizedError {
+    var errorDescription: String? = "myError description"
 }
 
-func other() throws -> Int {
-    120 / Int.random(in: 0...5)
-}
-
-try! some() + other()
-try! (some() + other())
-(try! some()) + (try! other())
-
-func otherr() -> Int {
-    120 / Int.random(in: 1...5)
-}
-try? some() + otherr()
+print(MyError().localizedDescription) // myError description
