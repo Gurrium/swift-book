@@ -1,15 +1,8 @@
-//import Foundation
-//
-//struct MyError: LocalizedError {
-//    var errorDescription: String? = "myError description"
-//}
-//
-//print(MyError().localizedDescription)
-
-import Foundation
-
-struct MyError: LocalizedError {
-    var errorDescription: String? = "myError description"
+func logFunctionName(string: String = #function) {
+    print(string)
+}
+func myFunction() {
+    logFunctionName() // myFunction()
 }
 
-print(MyError().localizedDescription) // myError description
+myFunction()
