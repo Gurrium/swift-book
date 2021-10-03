@@ -1,27 +1,10 @@
-class Sup {
-    var prop = 0
-
-    subscript(_ i: Int) -> Int {
-        return i * 2
-    }
-
-    func meth() {
-        print("meth")
-    }
-
-    init() {}
+class Some {
+    static let a = "a"
+    let b = "b"
 }
-
-class Sub: Sup {
-    override init() {
-        super.init()
-        print(super[1])
-        print(super.prop)
-        super.meth()
-    }
+class Sub: Some {
+    static let shared = Sub()
+    func f() -> Some { Some() }
 }
-
-Sub()
-// 2
-// 0
-// meth
+let x: Some? = Sub().f()
+let y: Some = Sub.shared
