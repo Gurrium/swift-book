@@ -1,26 +1,4 @@
-struct Task {
-    var description: String
-    var completed: Bool
-}
-var toDoList = [
-    Task(description: "Practice ping-pong.", completed: false),
-    Task(description: "Buy a pirate costume.", completed: true),
-    Task(description: "Visit Boston in the Fall.", completed: false),
-]
+let opt: [Int]? = []
+opt.map { $0 }
 
-func makeIndex() -> Int {
-    print("Made an index")
-    return Int.random(in: 0...2)
-}
-
-let taskKeyPath = \[Task][makeIndex()] // Made an index
-let someTask = toDoList[keyPath: taskKeyPath]
-
-extension Array where Element == Task {
-    subscript(keyPathGenerator: () -> KeyPath<Array<Element>, Element>) -> Element {
-        self[keyPath: keyPathGenerator()]
-    }
-}
-
-toDoList[makeIndex()]
-
+// 本編 https://giarrium.hatenablog.com/entry/2021/10/06/205135?_ga=2.162053950.367605791.1633259917-1187270239.1617328348
