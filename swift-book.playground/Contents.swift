@@ -1,17 +1,5 @@
-func some(_ closure: (() -> ())?) {
-    closure?()
+struct Some {
+    let prop: String
 }
-
-some {
-    print("hoge")
-}
-
-typealias Callback = (Int) -> Int
-func someFunction(firstClosure: Callback? = nil,
-                  secondClosure: Callback? = nil) {
-    let first = firstClosure?(10)
-    let second = secondClosure?(20)
-    print(first ?? "-", second ?? "-")
-}
-
-someFunction { $0 } // - 20
+let initizlier = Some.init
+print(initizlier("hoge").prop) // hoge
