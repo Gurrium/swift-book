@@ -1,8 +1,12 @@
-switch (1, 2) {
-// case let (x, y) where x == y, let (x, _) where x == 2: // 'y' must be bound in every pattern
-    print(x)
-case let (x, _) where x % 3 == 0, let (x, _) where x % 4 == 0:
-    print(x)
+switch 1 {
+case 1:
+    print("1")
+    fallthrough
+case 2:
+    print("2")
 default:
-    break
+    print("printed number")
 }
+
+// 1
+// 2
