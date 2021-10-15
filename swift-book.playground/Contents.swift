@@ -1,9 +1,3 @@
-struct Some {
-    var stored = "stored"
-    var computed: String {
-        "computed"
-    }
-}
-let some = Some()
+func fnc(_: Int) {}
 
-print(some.stored, some.computed, separator: ", ") // stored, computed
+fnc(2)
