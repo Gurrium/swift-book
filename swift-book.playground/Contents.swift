@@ -1,16 +1,12 @@
-struct Some {
-    func someFunc(_: () -> Void) {}
+struct SomeSpecialID: Equatable, ExpressibleByStringLiteral {
+    let value: String
 
-    // Invalid redeclaration of 'someFunc()'
-    // func someFunc(_: () -> Void) throws {}
-
-    // 引数の型が違うのでオーバーロードできる
-    func someFunc(_: () throws -> Void) {}
+    init(stringLiteral value: String) {
+        self.value = value
+    }
 }
 
-func neverReturn() -> Never {
-    fatalError()
+enum Other: SomeSpecialID {
+    case a, b, c
 }
-let never: Never
-never = neverReturn()
-print(never)
+print(Other.a.rawValue)
