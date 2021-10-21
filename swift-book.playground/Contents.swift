@@ -1,10 +1,28 @@
-protocol SomeProtocol {
-    static var someValue: Self { get }
-    static func someFunction(x: Int) -> Self
+class Super {
+    var superProp: String
+
+    init?(_ str: String) {
+        if str.isEmpty {
+            return nil
+        }
+
+        superProp = str
+    }
 }
-enum MyEnum: SomeProtocol {
-    case someValue
-    case someFunction(x: Int)
+
+class Sub: Super {
+    var prop: String
+
+    init?() {
+        prop = "hoge"
+
+        super.init("")
+    }
+
+    convenience init?(isHoge: Bool) {
+        self.init()
+    }
 }
-let someProtocol: SomeProtocol = MyEnum.someValue
-print(type(of: someProtocol).someValue) // someValue
+
+print(Sub()) // nil
+print(Sub(isHoge: false)) // nil
