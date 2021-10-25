@@ -1,31 +1,40 @@
-import Foundation
+precedencegroup SomePrecedence {
+    higherThan: AdditionPrecedence
+    lowerThan: MultiplicationPrecedence
+    associativity: left
+    assignment: true
+}
 
-class Cls {
-    subscript(arg param: Int) -> Int {
-        return param * 2
+precedencegroup OtherPrecedence {
+    higherThan: AdditionPrecedence
+    lowerThan: MultiplicationPrecedence
+    associativity: left
+    assignment: false
+}
+
+infix operator ++=: SomePrecedence
+infix operator --=: OtherPrecedence
+
+extension Int {
+    static func ++=(lhs: inout Int, rhs: Int) {
+        lhs += rhs
+    }
+
+    static func --=(lhs: inout Int, rhs: Int) {
+        lhs -= rhs
     }
 }
-Cls()[arg: 1]
 
-actor SomeActor {
-    var arr = [Int]()
-
-    subscript(_ index: Int) -> Int{
-        get {
-            Thread.sleep(forTimeInterval: 0.5)
-
-            return arr[index]
-        }
-
-        set {
-            arr[index] = newValue
-        }
-    }
+struct Some {
+    var num = 5
 }
 
-let some = SomeActor()
-Task {
-    some[0] = 0 // Actor-isolated subscript 'subscript(_:)' can not be mutated from a non-isolated context
-    some.arr.append(0) // Actor-isolated property 'arr' can not be mutated from a non-isolated context
-    print(await some[0])
-}
+var some: Some? = Some()
+print("#1")
+some?.num ++= 1
+print("#2")
+some?.num --= 1 // Cannot convert value of type 'Int?' to expected argument type 'Int'
+print("#3")
+some!.num ++= 1
+print("#4")
+some!.num --= 1
