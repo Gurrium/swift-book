@@ -1,40 +1,32 @@
-precedencegroup SomePrecedence {
-    higherThan: AdditionPrecedence
-    lowerThan: MultiplicationPrecedence
-    associativity: left
-    assignment: true
-}
+@dynamicMemberLookup
+struct DynamicStruct {
+    var dictionary = [
+        "a": 0,
+        "b": 1,
+    ]
 
-precedencegroup OtherPrecedence {
-    higherThan: AdditionPrecedence
-    lowerThan: MultiplicationPrecedence
-    associativity: left
-    assignment: false
-}
-
-infix operator ++=: SomePrecedence
-infix operator --=: OtherPrecedence
-
-extension Int {
-    static func ++=(lhs: inout Int, rhs: Int) {
-        lhs += rhs
-    }
-
-    static func --=(lhs: inout Int, rhs: Int) {
-        lhs -= rhs
+    subscript(dynamicMember member: String) -> Int {
+        dictionary[member] ?? -1
     }
 }
 
-struct Some {
-    var num = 5
+var ds = DynamicStruct()
+print(ds.a) // 0
+ds.dictionary["c"] = 3
+print(ds.c) // 3
+
+var d: Double = ds.d // Cannot convert value of type 'Int' to specified type 'Double'
+
+struct StaticStruct {
+    var dictionary = [
+        "a": 0,
+        "b": 1,
+    ]
 }
 
-var some: Some? = Some()
-print("#1")
-some?.num ++= 1
-print("#2")
-some?.num --= 1 // Cannot convert value of type 'Int?' to expected argument type 'Int'
-print("#3")
-some!.num ++= 1
-print("#4")
-some!.num --= 1
+var ss = StaticStruct()
+print(ds.a) // 0
+ds.dictionary["c"] = 3
+print(ds.c) // 3
+
+var d: Double = ss.d // Value of type 'StaticStruct' has no member 'd'
