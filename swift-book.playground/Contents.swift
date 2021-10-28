@@ -1,20 +1,15 @@
-struct Hoge {
-    @inlinable
-    func hoge() {
-        print(Fuga().someInternal(), Piyo().otherInternal())
+import UIKit
+
+class Cls {
+    init() {
+        let someButton = UIButton()
+        someButton.target(forAction: #selector(tapSomeButton), withSender: nil)
+        let otherButton = UIButton()
+        otherButton.target(forAction: #selector(tapOtherButton), withSender: nil)
     }
 }
 
-struct Fuga {
-    internal func someInternal() -> String {
-        "some"
-    }
+@objc extension Cls {
+    func tapSomeButton() {}
+    func tapOtherButton() {}
 }
-
-struct Piyo {
-    @usableFromInline
-    internal func otherInternal() -> String {
-        "other"
-    }
-}
-Hoge().hoge()
