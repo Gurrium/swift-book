@@ -1,6 +1,15 @@
-import UIKit
+func some() {
+    print("some()")
+}
 
-let tabBarController = UITabBarController()
-let vc = UIViewController()
-tabBarController.viewControllers = [vc]
-vc.parent == tabBarController
+
+struct Some {
+    @warn_unqualified_access
+    func some() {
+        print("Some.some()")
+    }
+
+    func doSome() {
+        some() // Use of 'some' treated as a reference to instance method in struct 'Some'
+    }
+}
