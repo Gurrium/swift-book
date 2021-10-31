@@ -1,15 +1,10 @@
-func some() {
-    print("some()")
+let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
+
+for case let number? in arrayOfOptionalInts {
+    print("Found a \(number)")
 }
+// Found a 2
+// Found a 3
+// Found a 5
 
-
-struct Some {
-    @warn_unqualified_access
-    func some() {
-        print("Some.some()")
-    }
-
-    func doSome() {
-        some() // Use of 'some' treated as a reference to instance method in struct 'Some'
-    }
-}
+arrayOfOptionalInts.compactMap({ $0 }).forEach({ print($0) })
