@@ -1,10 +1,18 @@
-let arrayOfOptionalInts: [Int?] = [nil, 2, 3, nil, 5]
+class Hoge {}
+class Fuga: Hoge {}
 
-for case let number? in arrayOfOptionalInts {
-    print("Found a \(number)")
+print(Fuga.self is Hoge.Type) // true
+print(Hoge.self is Hoge.Type) // true
+
+let point = (1, 2)
+// Overload the ~= operator to match a string with an integer.
+func ~= (pattern: String, value: Int) -> Bool {
+    return pattern == "\(value)"
 }
-// Found a 2
-// Found a 3
-// Found a 5
-
-arrayOfOptionalInts.compactMap({ $0 }).forEach({ print($0) })
+switch point {
+case ("0", "0"):
+    print("(0, 0) is at the origin.")
+default:
+    print("The point is at (\(point.0), \(point.1)).")
+}
+// Prints "The point is at (1, 2)."
