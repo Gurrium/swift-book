@@ -1,4 +1,13 @@
-class C {
-    public static let _prop = 0
-    public static let prop = 1
+import Foundation
+
+class Cls {
+    func someFunc(param: String) {
+        print(param)
+    }
+
+    func otherFunc() {
+        DispatchQueue.main.async { [someFunc] in
+            someFunc("hoge")
+        }
+    }
 }
